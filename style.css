@@ -1,0 +1,14 @@
+*{
+    box-sizing: border-box;
+    font-family: "Comic Sans MS", sans-serif;
+
+}
+body{
+    overflow: hidden;
+    margin:0;
+    padding:0;
+}
+#canvas{
+    display: inline-block;
+    background-color: black;
+}
