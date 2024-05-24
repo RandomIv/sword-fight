@@ -1,41 +1,61 @@
 'use strict';
-export default class Swordsman {
-  constructor(context, position, size, velocity) {
-    this.context = context;
-    this.position = position;
-    this.size = size;
+import Sprite from './sprite.js';
+export default class Swordsman extends Sprite {
+  constructor(
+    context,
+    position,
+    size,
+    velocity,
+    imageSrc,
+    scale = 1,
+    framesMax = 1,
+    offset = { x: 0, y: 0 },
+    sprites
+  ) {
+    super(context, position, size, imageSrc, scale, framesMax, offset);
     this.velocity = velocity;
     this.lastKey = '';
-    this.direction = 1;
+    this.direction = 0;
     this.attackCollision = {
-      position: { x: this.position.x + this.size.width * this.direction, y: this.position.y },
-      size: { width: 100, height: 50 }
+      position: {
+        x: this.position.x,
+        y: this.position.y
+      },
+      offset: { x: 230, y: 150 },
+      size: { width: 220, height: 150 }
     };
     this.isAttacking = false;
-  }
-  draw() {
-    this.context.fillStyle = 'yellow';
-    this.context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
-
-    if (this.isAttacking) {
-      this.context.fillStyle = 'green';
-      this.context.fillRect(
-        this.attackCollision.position.x,
-        this.attackCollision.position.y,
-        this.attackCollision.size.width,
-        this.attackCollision.size.height
-      );
+    this.sprites = sprites;
+    for (const sprite of Object.values(this.sprites)) {
+      sprite.image = new Image();
+      sprite.image.src = sprite.imageSrc;
+      console.log(sprite);
     }
   }
   update() {
     this.draw();
+    this.animateFrames();
     this.position.x += this.velocity.speed * this.velocity.direction;
-    this.attackCollision.position.x = this.position.x + this.size.width * this.direction;
+    if (this.direction === 1) {
+      this.attackCollision.position.x = this.position.x;
+    } else {
+      this.attackCollision.position.x = this.position.x - this.attackCollision.size.width;
+    }
   }
   attack() {
     this.isAttacking = true;
-    setTimeout(() => {
-      this.isAttacking = false;
-    }, 100);
+    setTimeout(
+      () => {
+        this.isAttacking = false;
+      },
+      (1000 / 144) * this.framesHold * this.sprites.attackRight1.framesMax
+    );
+  }
+  changeSprite(sprite) {
+    if (this.image !== this.sprites[sprite].image) {
+      this.image = this.sprites[sprite].image;
+      this.framesMax = this.sprites[sprite].framesMax;
+      this.framesCurrent = 0;
+    }
   }
 }
