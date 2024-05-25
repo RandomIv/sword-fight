@@ -2,6 +2,7 @@
 import Swordsman from './swordsman.js';
 import Sprite from './sprite.js';
 import { kenshi, redKenshi } from './characters.js';
+import { keys } from './inputCheck.js';
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
@@ -10,7 +11,7 @@ canvas.width = window.innerWidth;
 
 const speed = 3;
 const playerScale = 3.5;
-const playerSize = { width: 150, height: 200 };
+const playerSize = { width: 90, height: 200 };
 const velocity = { direction: 0, speed };
 
 const background = new Sprite(
@@ -20,56 +21,31 @@ const background = new Sprite(
   './images/Background.png',
   0.5
 );
-const player1 = new Swordsman(
+export const player1 = new Swordsman(
   context,
   { x: 200, y: 410 },
   { ...playerSize },
   { ...velocity },
-  './images/player1/IdleRight.png',
+  './images/Kenshi/IdleRight.png',
   playerScale,
   4,
-  { x: 80 * playerScale, y: 70 * playerScale },
+  { x: 84 * playerScale, y: 70 * playerScale },
+  { x: -45, y: 0 },
   kenshi
 );
 
-const player2 = new Swordsman(
+export const player2 = new Swordsman(
   context,
   { x: 1200, y: 410 },
   { ...playerSize },
   { ...velocity },
-  './images/player2/IdleLeft.png',
+  './images/RedKenshi/IdleLeft.png',
   playerScale,
   8,
-  { x: 80 * playerScale, y: 70 * playerScale },
+  { x: 90 * playerScale, y: 70 * playerScale },
+  { x: 220, y: 0 },
   redKenshi
 );
-
-const keys = {
-  a: {
-    isPressed: false
-  },
-  d: {
-    isPressed: false
-  },
-  w: {
-    isPressed: false
-  },
-  s: {
-    isPressed: false
-  },
-  arrowLeft: {
-    isPressed: false
-  },
-  arrowRight: {
-    isPressed: false
-  },
-  arrowUp: {
-    isPressed: false
-  },
-  arrowDown: {
-    isPressed: false
-  }
-};
 
 const checkRectangularCollision = (rect1, rect2) => {
   return (
@@ -104,6 +80,8 @@ const animate = () => {
         player1.changeSprite('runRight');
       } else if (keys.w.isPressed) {
         player1.changeSprite('stanceHighRight');
+        if (player1.isAttacking) {
+        }
       } else if (keys.s.isPressed) {
         player1.changeSprite('stanceLowRight');
       } else {
@@ -190,24 +168,36 @@ const animate = () => {
     player1.isAttacking,
     player2.isAttacking
   );
-  if (
-    checkRectangularCollision(player1.attackCollision, player2.attackCollision) &&
-    player1.isAttacking &&
-    player2.isAttacking
-  ) {
-    console.log('Sword Clash!');
-  } else if (
-    checkRectangularCollision(player1.attackCollision, player2) &&
-    player1.isAttacking &&
-    !player2.isAttacking
-  ) {
-    console.log('player 1 hit');
-  } else if (
-    checkRectangularCollision(player2.attackCollision, player1) &&
-    player2.isAttacking &&
-    !player1.isAttacking
-  ) {
-    console.log('player 2 hit');
+  if (player1.framesCurrent === 3 && player2.framesCurrent === 3) {
+    if (
+      checkRectangularCollision(player1.attackCollision, player2.attackCollision) &&
+      player1.isAttacking &&
+      player2.isAttacking
+    ) {
+      console.log('Sword Clash!');
+    }
+    player1.isAttacking = false;
+    player2.isAttacking = false;
+  }
+  if (player1.framesCurrent === 3) {
+    if (
+      checkRectangularCollision(player1.attackCollision, player2) &&
+      player1.isAttacking &&
+      !player2.isAttacking
+    ) {
+      console.log('player 1 hit');
+    }
+    player1.isAttacking = false;
+  }
+  if (player2.framesCurrent === 3) {
+    if (
+      checkRectangularCollision(player2.attackCollision, player1) &&
+      player2.isAttacking &&
+      !player1.isAttacking
+    ) {
+      console.log('player 2 hit');
+    }
+    player2.isAttacking = false;
   }
 
   if (player1.position.x < player2.position.x) {
@@ -217,78 +207,13 @@ const animate = () => {
     player1.direction = -1;
     player2.direction = 1;
   }
+  if (keys.f.isPressed) {
+    player1.showCollisions = true;
+    player2.showCollisions = true;
+  } else {
+    player1.showCollisions = false;
+    player2.showCollisions = false;
+  }
 };
 
 animate();
-
-document.addEventListener('keydown', (event) => {
-  switch (event.key) {
-    //for player1
-    case 'a':
-      keys.a.isPressed = true;
-      player1.lastKey = 'a';
-      break;
-    case 'd':
-      keys.d.isPressed = true;
-      player1.lastKey = 'd';
-      break;
-    case 'w':
-      keys.w.isPressed = true;
-      break;
-    case 's':
-      keys.s.isPressed = true;
-      break;
-    case ' ':
-      if (!player1.isAttacking) player1.attack();
-      break;
-
-    //for player2
-    case 'ArrowLeft':
-      keys.arrowLeft.isPressed = true;
-      player2.lastKey = 'arrowLeft';
-      break;
-    case 'ArrowRight':
-      keys.arrowRight.isPressed = true;
-      player2.lastKey = 'arrowRight';
-      break;
-    case 'ArrowUp':
-      keys.arrowUp.isPressed = true;
-      break;
-    case 'ArrowDown':
-      keys.arrowDown.isPressed = true;
-      break;
-    case 'z':
-      if (!player2.isAttacking) player2.attack();
-      break;
-  }
-});
-document.addEventListener('keyup', (event) => {
-  switch (event.key) {
-    //for player1
-    case 'a':
-      keys.a.isPressed = false;
-      break;
-    case 'd':
-      keys.d.isPressed = false;
-      break;
-    case 'w':
-      keys.w.isPressed = false;
-      break;
-    case 's':
-      keys.s.isPressed = false;
-      break;
-    //for player2
-    case 'ArrowLeft':
-      keys.arrowLeft.isPressed = false;
-      break;
-    case 'ArrowRight':
-      keys.arrowRight.isPressed = false;
-      break;
-    case 'ArrowUp':
-      keys.arrowUp.isPressed = false;
-      break;
-    case 'ArrowDown':
-      keys.arrowDown.isPressed = false;
-      break;
-  }
-});

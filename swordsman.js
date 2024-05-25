@@ -10,46 +10,55 @@ export default class Swordsman extends Sprite {
     scale = 1,
     framesMax = 1,
     offset = { x: 0, y: 0 },
+    attackCollisionOffset,
     sprites
   ) {
     super(context, position, size, imageSrc, scale, framesMax, offset);
-    this.velocity = velocity;
-    this.lastKey = '';
-    this.direction = 0;
+    this.attackCollisionOffset = attackCollisionOffset;
     this.attackCollision = {
       position: {
         x: this.position.x,
         y: this.position.y
       },
-      size: { width: 290, height: 200 }
+      size: { width: 270, height: 200 },
+      offset: this.attackCollisionOffset
     };
-    this.isAttacking = false;
-    this.isInFightingMode = false;
     this.sprites = sprites;
+    this.velocity = velocity;
+    this.lastKey = '';
+    this.direction = 0;
+    this.isAttacking = false;
+    this.showCollisions = false;
     for (const sprite of Object.values(this.sprites)) {
       sprite.image = new Image();
       sprite.image.src = sprite.imageSrc;
-      console.log(sprite);
+    }
+  }
+  draw() {
+    super.draw();
+    if (this.showCollisions) {
+      if (this.isAttacking) {
+        this.context.fillStyle = 'green';
+        this.context.fillRect(
+          this.attackCollision.position.x,
+          this.attackCollision.position.y,
+          this.attackCollision.size.width,
+          this.attackCollision.size.height
+        );
+      }
+      this.context.fillStyle = 'yellow';
+      this.context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
     }
   }
   update() {
     this.draw();
     this.animateFrames();
     this.position.x += this.velocity.speed * this.velocity.direction;
-    if (this.direction === 1) {
-      this.attackCollision.position.x = this.position.x + this.size.width / 2;
-    } else {
-      this.attackCollision.position.x = this.position.x - this.attackCollision.size.width;
-    }
+    this.attackCollision.position.x = this.position.x - this.attackCollision.offset.x;
+    this.attackCollision.position.y = this.position.y - this.attackCollision.offset.y;
   }
   attack() {
     this.isAttacking = true;
-    setTimeout(
-      () => {
-        this.isAttacking = false;
-      },
-      (1000 / 144) * this.framesHold * this.sprites.attackRight.framesMax
-    );
   }
   changeSprite(sprite) {
     if (this.image !== this.sprites[sprite].image) {
