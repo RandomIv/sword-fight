@@ -55,12 +55,12 @@ export const kenshi = {
     imageSrc: './images/Kenshi/StanceHighLeft.png',
     framesMax: 1
   },
-  takeHit: {
-    imageSrc: './images/Kenshi/TakeHit.png',
-    framesMax: 3
+  deathRight: {
+    imageSrc: './images/Kenshi/DeathRight.png',
+    framesMax: 7
   },
-  death: {
-    imageSrc: './images/Kenshi/Death.png',
+  deathLeft: {
+    imageSrc: './images/Kenshi/DeathLeft.png',
     framesMax: 7
   }
 };
@@ -122,12 +122,12 @@ export const redKenshi = {
     imageSrc: './images/RedKenshi/StanceHighLeft.png',
     framesMax: 1
   },
-  takeHit: {
-    imageSrc: './images/RedKenshi/TakeHit.png',
-    framesMax: 3
+  deathRight: {
+    imageSrc: './images/RedKenshi/DeathRight.png',
+    framesMax: 7
   },
-  death: {
-    imageSrc: './images/RedKenshi/Death.png',
+  deathLeft: {
+    imageSrc: './images/RedKenshi/DeathLeft.png',
     framesMax: 7
   }
 };
