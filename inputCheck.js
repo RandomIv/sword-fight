@@ -26,9 +26,15 @@ export const keys = {
   },
   f: {
     isPressed: false
+  },
+  r: {
+    isPressed: false
   }
 };
 document.addEventListener('keydown', (event) => {
+  if (event.key === 'r') {
+    keys.r.isPressed = true;
+  }
   //for player1
   switch (event.key) {
     case 'a':
@@ -75,6 +81,9 @@ document.addEventListener('keydown', (event) => {
   }
 });
 document.addEventListener('keyup', (event) => {
+  if (event.key === 'r') {
+    keys.r.isPressed = false;
+  }
   //for player1
   switch (event.key) {
     case 'a':

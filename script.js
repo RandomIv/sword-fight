@@ -15,9 +15,12 @@ let isGameOver = false;
 const speed = 3;
 const playerScale = 3.5;
 const playerSize = { width: 90, height: 200 };
+const playerOffset = { x: 87 * playerScale, y: 70 * playerScale };
 const velocity = { direction: 0, speed };
 const attackCollisionOffsetRight = { x: -40, y: 0 };
 const attackCollisionOffsetLeft = { x: 210, y: 0 };
+export let player1;
+export let player2;
 const background = new Sprite(
   context,
   { x: 0, y: -300 },
@@ -25,34 +28,36 @@ const background = new Sprite(
   './images/Background.png',
   0.5
 );
-export const player1 = new Swordsman(
-  context,
-  { x: 200, y: 410 },
-  { ...playerSize },
-  { ...velocity },
-  './images/Kenshi/stanceMiddleRight.png',
-  playerScale,
-  4,
-  { x: 87 * playerScale, y: 70 * playerScale },
-  attackCollisionOffsetRight,
-  attackCollisionOffsetLeft,
-  kenshi
-);
-
-export const player2 = new Swordsman(
-  context,
-  { x: 1200, y: 410 },
-  { ...playerSize },
-  { ...velocity },
-  './images/RedKenshi/stanceMiddleLeft.png',
-  playerScale,
-  8,
-  { x: 87 * playerScale, y: 70 * playerScale },
-  attackCollisionOffsetRight,
-  attackCollisionOffsetLeft,
-  redKenshi
-);
-
+const newGame = () => {
+  endGameText.style.display = 'none';
+  isGameOver = false;
+  player1 = new Swordsman(
+    context,
+    { x: 200, y: 410 },
+    { ...playerSize },
+    { ...velocity },
+    './images/Kenshi/stanceMiddleRight.png',
+    playerScale,
+    4,
+    { ...playerOffset },
+    attackCollisionOffsetRight,
+    attackCollisionOffsetLeft,
+    kenshi
+  );
+  player2 = new Swordsman(
+    context,
+    { x: 1200, y: 410 },
+    { ...playerSize },
+    { ...velocity },
+    './images/RedKenshi/stanceMiddleLeft.png',
+    playerScale,
+    8,
+    { ...playerOffset },
+    attackCollisionOffsetRight,
+    attackCollisionOffsetLeft,
+    redKenshi
+  );
+};
 const checkRectangularCollision = (rect1, rect2) => {
   return (
     rect1.position.x + rect1.size.width >= rect2.position.x &&
@@ -64,7 +69,6 @@ const playerMovement = (player) => {
   const lastKey = player.lastKey;
   const stance = player.stance;
   const direction = player.direction;
-
   if (player.isDead) {
     player.changeSprite(`death${direction}`);
     if (player.framesCurrent === player.framesMax - 1) {
@@ -95,6 +99,16 @@ const checkDirectionOfPlayers = () => {
   }
 };
 
+const checkHit = (player1, player2) => {
+  if (
+    checkRectangularCollision(player1.attackCollision, player2) &&
+    player1.isAttacking &&
+    !player2.isAttacking &&
+    player1.framesCurrent === 3
+  ) {
+    player2.takeHitBy(player1);
+  }
+};
 const checkSwordsCollisions = () => {
   if (
     checkRectangularCollision(player1.attackCollision, player2.attackCollision) &&
@@ -104,22 +118,9 @@ const checkSwordsCollisions = () => {
     player2.framesCurrent === 2
   ) {
     console.log('Sword Clash!');
-  } else if (
-    checkRectangularCollision(player1.attackCollision, player2) &&
-    player1.isAttacking &&
-    !player2.isAttacking &&
-    player1.framesCurrent === 3
-  ) {
-    player2.tookHitBy(player1);
-  } else if (
-    checkRectangularCollision(player2.attackCollision, player1) &&
-    player2.isAttacking &&
-    !player1.isAttacking &&
-    player2.framesCurrent === 3
-  ) {
-    player1.tookHitBy(player2);
   }
-
+  checkHit(player1, player2);
+  checkHit(player2, player1);
   if (player1.framesCurrent === 3) {
     player1.isAttacking = false;
   }
@@ -131,9 +132,9 @@ const checkSwordsCollisions = () => {
 
 const gameOver = () => {
   endGameText.style.display = 'block';
-  endGameText.innerText = `${player1.isDead ? 'Player 2' : 'Player 1'}  has won!`;
+  endGameText.innerText = `${player1.isDead ? 'Player 2' : 'Player 1'}  has won! 
+  Press 'r' to restart`;
 };
-
 const animate = () => {
   window.requestAnimationFrame(animate);
   background.update();
@@ -151,6 +152,9 @@ const animate = () => {
   if (isGameOver) {
     gameOver();
   }
+  if (keys.r.isPressed) {
+    newGame();
+  }
 };
-
+newGame();
 animate();
