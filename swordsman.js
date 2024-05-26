@@ -29,32 +29,12 @@ export default class Swordsman extends Sprite {
     this.lastKey = '';
     this.direction = 'Right';
     this.isAttacking = false;
-    this.isCollisionSeen = false;
     this.isDead = false;
     this.stance = 'Middle';
     for (const sprite of Object.values(this.sprites)) {
       sprite.image = new Image();
       sprite.image.src = sprite.imageSrc;
     }
-  }
-  showCollisions() {
-    if (this.isCollisionSeen) {
-      if (this.isAttacking) {
-        this.context.fillStyle = 'green';
-        this.context.fillRect(
-          this.attackCollision.position.x,
-          this.attackCollision.position.y,
-          this.attackCollision.size.width,
-          this.attackCollision.size.height
-        );
-      }
-      this.context.fillStyle = 'yellow';
-      this.context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
-    }
-  }
-  draw() {
-    super.draw();
-    this.showCollisions();
   }
   update() {
     this.draw();

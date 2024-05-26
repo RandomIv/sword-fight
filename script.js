@@ -16,8 +16,8 @@ const speed = 3;
 const playerScale = 3.5;
 const playerSize = { width: 90, height: 200 };
 const velocity = { direction: 0, speed };
-const attackCollisionOffsetRight = { x: -45, y: 0 };
-const attackCollisionOffsetLeft = { x: 220, y: 0 };
+const attackCollisionOffsetRight = { x: -40, y: 0 };
+const attackCollisionOffsetLeft = { x: 210, y: 0 };
 const background = new Sprite(
   context,
   { x: 0, y: -300 },
@@ -33,7 +33,7 @@ export const player1 = new Swordsman(
   './images/Kenshi/stanceMiddleRight.png',
   playerScale,
   4,
-  { x: 84 * playerScale, y: 70 * playerScale },
+  { x: 87 * playerScale, y: 70 * playerScale },
   attackCollisionOffsetRight,
   attackCollisionOffsetLeft,
   kenshi
@@ -47,7 +47,7 @@ export const player2 = new Swordsman(
   './images/RedKenshi/stanceMiddleLeft.png',
   playerScale,
   8,
-  { x: 90 * playerScale, y: 70 * playerScale },
+  { x: 87 * playerScale, y: 70 * playerScale },
   attackCollisionOffsetRight,
   attackCollisionOffsetLeft,
   redKenshi
@@ -84,38 +84,34 @@ const playerMovement = (player) => {
     }
   }
 };
-const gameOver = () => {
-  endGameText.style.display = 'block';
-  endGameText.innerText = `${player1.isDead ? 'Player 2' : 'Player 1'}  has won!`;
-};
-const animate = () => {
-  window.requestAnimationFrame(animate);
-  background.update();
-  if (!isGameOver) {
-    player1.update();
-    player2.update();
-    playerMovement(player1);
-    playerMovement(player2);
-  }
 
+const checkDirectionOfPlayers = () => {
+  if (player1.position.x < player2.position.x) {
+    player1.direction = 'Right';
+    player2.direction = 'Left';
+  } else {
+    player1.direction = 'Left';
+    player2.direction = 'Right';
+  }
+};
+
+const checkSwordsCollisions = () => {
   if (
     checkRectangularCollision(player1.attackCollision, player2.attackCollision) &&
     player1.isAttacking &&
     player2.isAttacking &&
-    player1.framesCurrent === 3 &&
-    player2.framesCurrent === 3
+    player1.framesCurrent === 2 &&
+    player2.framesCurrent === 2
   ) {
     console.log('Sword Clash!');
-  }
-  if (
+  } else if (
     checkRectangularCollision(player1.attackCollision, player2) &&
     player1.isAttacking &&
     !player2.isAttacking &&
     player1.framesCurrent === 3
   ) {
     player2.tookHitBy(player1);
-  }
-  if (
+  } else if (
     checkRectangularCollision(player2.attackCollision, player1) &&
     player2.isAttacking &&
     !player1.isAttacking &&
@@ -131,22 +127,27 @@ const animate = () => {
   if (player2.framesCurrent === 3) {
     player2.isAttacking = false;
   }
+};
 
-  if (player1.position.x < player2.position.x) {
-    player1.direction = 'Right';
-    player2.direction = 'Left';
-  } else {
-    player1.direction = 'Left';
-    player2.direction = 'Right';
+const gameOver = () => {
+  endGameText.style.display = 'block';
+  endGameText.innerText = `${player1.isDead ? 'Player 2' : 'Player 1'}  has won!`;
+};
+
+const animate = () => {
+  window.requestAnimationFrame(animate);
+  background.update();
+  if (!isGameOver) {
+    player1.update();
+    player2.update();
+    playerMovement(player1);
+    playerMovement(player2);
   }
 
-  if (keys.f.isPressed) {
-    player1.isCollisionSeen = true;
-    player2.isCollisionSeen = true;
-  } else {
-    player1.isCollisionSeen = false;
-    player2.isCollisionSeen = false;
-  }
+  checkSwordsCollisions();
+
+  checkDirectionOfPlayers();
+
   if (isGameOver) {
     gameOver();
   }
