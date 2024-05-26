@@ -14,29 +14,28 @@ export default class Swordsman extends Sprite {
     sprites
   ) {
     super(context, position, size, imageSrc, scale, framesMax, offset);
-    this.attackCollisionOffset = attackCollisionOffset;
     this.attackCollision = {
       position: {
         x: this.position.x,
         y: this.position.y
       },
       size: { width: 270, height: 200 },
-      offset: this.attackCollisionOffset
+      offset: attackCollisionOffset
     };
     this.sprites = sprites;
     this.velocity = velocity;
     this.lastKey = '';
     this.direction = 0;
     this.isAttacking = false;
-    this.showCollisions = false;
+    this.isCollisionSeen = false;
+    this.stance = 'Middle';
     for (const sprite of Object.values(this.sprites)) {
       sprite.image = new Image();
       sprite.image.src = sprite.imageSrc;
     }
   }
-  draw() {
-    super.draw();
-    if (this.showCollisions) {
+  showCollisions() {
+    if (this.isCollisionSeen) {
       if (this.isAttacking) {
         this.context.fillStyle = 'green';
         this.context.fillRect(
@@ -49,6 +48,10 @@ export default class Swordsman extends Sprite {
       this.context.fillStyle = 'yellow';
       this.context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
     }
+  }
+  draw() {
+    super.draw();
+    this.showCollisions();
   }
   update() {
     this.draw();

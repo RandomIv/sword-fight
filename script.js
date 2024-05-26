@@ -26,7 +26,7 @@ export const player1 = new Swordsman(
   { x: 200, y: 410 },
   { ...playerSize },
   { ...velocity },
-  './images/Kenshi/IdleRight.png',
+  './images/Kenshi/stanceMiddleRight.png',
   playerScale,
   4,
   { x: 84 * playerScale, y: 70 * playerScale },
@@ -39,7 +39,7 @@ export const player2 = new Swordsman(
   { x: 1200, y: 410 },
   { ...playerSize },
   { ...velocity },
-  './images/RedKenshi/IdleLeft.png',
+  './images/RedKenshi/stanceMiddleLeft.png',
   playerScale,
   8,
   { x: 90 * playerScale, y: 70 * playerScale },
@@ -53,10 +53,9 @@ const checkRectangularCollision = (rect1, rect2) => {
     rect2.position.x + rect2.size.width >= rect1.position.x
   );
 };
+
 const animate = () => {
   window.requestAnimationFrame(animate);
-  context.fillStyle = 'black';
-  context.fillRect(0, 0, canvas.width, canvas.height);
   background.update();
   player1.update();
   player2.update();
@@ -64,13 +63,7 @@ const animate = () => {
   player2.velocity.direction = 0;
   if (player1.direction === 1) {
     if (player1.isAttacking) {
-      if (keys.w.isPressed) {
-        player1.changeSprite('attackHighRight');
-      } else if (keys.s.isPressed) {
-        player1.changeSprite('attackLowRight');
-      } else {
-        player1.changeSprite('attackRight');
-      }
+      player1.changeSprite(`attack${player1.stance}Right`);
     } else {
       if (keys.a.isPressed && player1.lastKey === 'a') {
         player1.velocity.direction = -1;
@@ -78,25 +71,13 @@ const animate = () => {
       } else if (keys.d.isPressed && player1.lastKey === 'd') {
         player1.velocity.direction = 1;
         player1.changeSprite('runRight');
-      } else if (keys.w.isPressed) {
-        player1.changeSprite('stanceHighRight');
-        if (player1.isAttacking) {
-        }
-      } else if (keys.s.isPressed) {
-        player1.changeSprite('stanceLowRight');
       } else {
-        player1.changeSprite('idleRight');
+        player1.changeSprite(`stance${player1.stance}Right`);
       }
     }
   } else {
     if (player1.isAttacking) {
-      if (keys.w.isPressed) {
-        player1.changeSprite('attackHighLeft');
-      } else if (keys.s.isPressed) {
-        player1.changeSprite('attackLowLeft');
-      } else {
-        player1.changeSprite('attackLeft');
-      }
+      player1.changeSprite(`attack${player1.stance}Left`);
     } else {
       if (keys.a.isPressed && player1.lastKey === 'a') {
         player1.velocity.direction = -1;
@@ -104,24 +85,14 @@ const animate = () => {
       } else if (keys.d.isPressed && player1.lastKey === 'd') {
         player1.velocity.direction = 1;
         player1.changeSprite('runRight');
-      } else if (keys.w.isPressed) {
-        player1.changeSprite('stanceHighLeft');
-      } else if (keys.s.isPressed) {
-        player1.changeSprite('stanceLowLeft');
       } else {
-        player1.changeSprite('idleLeft');
+        player1.changeSprite(`stance${player1.stance}Left`);
       }
     }
   }
   if (player2.direction === 1) {
     if (player2.isAttacking) {
-      if (keys.arrowUp.isPressed) {
-        player2.changeSprite('attackHighRight');
-      } else if (keys.arrowDown.isPressed) {
-        player2.changeSprite('attackLowRight');
-      } else {
-        player2.changeSprite('attackRight');
-      }
+      player2.changeSprite(`attack${player2.stance}Right`);
     } else {
       if (keys.arrowLeft.isPressed && player2.lastKey === 'arrowLeft') {
         player2.velocity.direction = -1;
@@ -129,23 +100,13 @@ const animate = () => {
       } else if (keys.arrowRight.isPressed && player2.lastKey === 'arrowRight') {
         player2.velocity.direction = 1;
         player2.changeSprite('runRight');
-      } else if (keys.arrowUp.isPressed) {
-        player2.changeSprite('stanceHighRight');
-      } else if (keys.arrowDown.isPressed) {
-        player2.changeSprite('stanceLowRight');
       } else {
-        player2.changeSprite('idleRight');
+        player2.changeSprite(`stance${player2.stance}Right`);
       }
     }
   } else {
     if (player2.isAttacking) {
-      if (keys.arrowUp.isPressed) {
-        player2.changeSprite('attackHighLeft');
-      } else if (keys.arrowDown.isPressed) {
-        player2.changeSprite('attackLowLeft');
-      } else {
-        player2.changeSprite('attackLeft');
-      }
+      player2.changeSprite(`attack${player2.stance}Left`);
     } else {
       if (keys.arrowLeft.isPressed && player2.lastKey === 'arrowLeft') {
         player2.velocity.direction = -1;
@@ -153,12 +114,8 @@ const animate = () => {
       } else if (keys.arrowRight.isPressed && player2.lastKey === 'arrowRight') {
         player2.velocity.direction = 1;
         player2.changeSprite('runRight');
-      } else if (keys.arrowUp.isPressed) {
-        player2.changeSprite('stanceHighLeft');
-      } else if (keys.arrowDown.isPressed) {
-        player2.changeSprite('stanceLowLeft');
       } else {
-        player2.changeSprite('idleLeft');
+        player2.changeSprite(`stance${player2.stance}Left`);
       }
     }
   }
@@ -208,11 +165,11 @@ const animate = () => {
     player2.direction = 1;
   }
   if (keys.f.isPressed) {
-    player1.showCollisions = true;
-    player2.showCollisions = true;
+    player1.isCollisionSeen = true;
+    player2.isCollisionSeen = true;
   } else {
-    player1.showCollisions = false;
-    player2.showCollisions = false;
+    player1.isCollisionSeen = false;
+    player2.isCollisionSeen = false;
   }
 };
 

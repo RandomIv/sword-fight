@@ -44,9 +44,11 @@ document.addEventListener('keydown', (event) => {
       break;
     case 'w':
       keys.w.isPressed = true;
+      player1.stance = 'High';
       break;
     case 's':
       keys.s.isPressed = true;
+      player1.stance = 'Low';
       break;
     case ' ':
       if (!player1.isAttacking) player1.attack();
@@ -63,9 +65,11 @@ document.addEventListener('keydown', (event) => {
       break;
     case 'ArrowUp':
       keys.arrowUp.isPressed = true;
+      player2.stance = 'High';
       break;
     case 'ArrowDown':
       keys.arrowDown.isPressed = true;
+      player2.stance = 'Low';
       break;
     case 'z':
       if (!player2.isAttacking) player2.attack();
@@ -74,6 +78,9 @@ document.addEventListener('keydown', (event) => {
 });
 document.addEventListener('keyup', (event) => {
   switch (event.key) {
+    case 'f':
+      keys.f.isPressed = false;
+      break;
     //for player1
     case 'a':
       keys.a.isPressed = false;
@@ -83,9 +90,11 @@ document.addEventListener('keyup', (event) => {
       break;
     case 'w':
       keys.w.isPressed = false;
+      player1.stance = 'Middle';
       break;
     case 's':
       keys.s.isPressed = false;
+      player1.stance = 'Middle';
       break;
     //for player2
     case 'ArrowLeft':
@@ -96,12 +105,11 @@ document.addEventListener('keyup', (event) => {
       break;
     case 'ArrowUp':
       keys.arrowUp.isPressed = false;
+      player2.stance = 'Middle';
       break;
     case 'ArrowDown':
       keys.arrowDown.isPressed = false;
-      break;
-    case 'f':
-      keys.f.isPressed = false;
+      player2.stance = 'Middle';
       break;
   }
 });

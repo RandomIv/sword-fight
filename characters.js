@@ -1,10 +1,10 @@
 export const kenshi = {
-  idleRight: {
-    imageSrc: './images/Kenshi/IdleRight.png',
+  stanceMiddleRight: {
+    imageSrc: './images/Kenshi/StanceMiddleRight.png',
     framesMax: 4
   },
-  idleLeft: {
-    imageSrc: './images/Kenshi/IdleLeft.png',
+  stanceMiddleLeft: {
+    imageSrc: './images/Kenshi/StanceMiddleLeft.png',
     framesMax: 4
   },
   runRight: {
@@ -15,12 +15,12 @@ export const kenshi = {
     imageSrc: './images/Kenshi/RunLeft.png',
     framesMax: 8
   },
-  attackRight: {
-    imageSrc: './images/Kenshi/AttackRight.png',
+  attackMiddleRight: {
+    imageSrc: './images/Kenshi/AttackMiddleRight.png',
     framesMax: 4
   },
-  attackLeft: {
-    imageSrc: './images/Kenshi/AttackLeft.png',
+  attackMiddleLeft: {
+    imageSrc: './images/Kenshi/AttackMiddleLeft.png',
     framesMax: 4
   },
   attackLowRight: {
@@ -39,14 +39,6 @@ export const kenshi = {
     imageSrc: './images/Kenshi/AttackHighLeft.png',
     framesMax: 4
   },
-  takeHit: {
-    imageSrc: './images/Kenshi/TakeHit.png',
-    framesMax: 3
-  },
-  death: {
-    imageSrc: './images/Kenshi/Death.png',
-    framesMax: 7
-  },
   stanceLowRight: {
     imageSrc: './images/Kenshi/StanceLowRight.png',
     framesMax: 1
@@ -62,16 +54,24 @@ export const kenshi = {
   stanceHighLeft: {
     imageSrc: './images/Kenshi/StanceHighLeft.png',
     framesMax: 1
+  },
+  takeHit: {
+    imageSrc: './images/Kenshi/TakeHit.png',
+    framesMax: 3
+  },
+  death: {
+    imageSrc: './images/Kenshi/Death.png',
+    framesMax: 7
   }
 };
 
 export const redKenshi = {
-  idleRight: {
-    imageSrc: './images/RedKenshi/IdleRight.png',
+  stanceMiddleRight: {
+    imageSrc: './images/RedKenshi/StanceMiddleRight.png',
     framesMax: 4
   },
-  idleLeft: {
-    imageSrc: './images/RedKenshi/IdleLeft.png',
+  stanceMiddleLeft: {
+    imageSrc: './images/RedKenshi/StanceMiddleLeft.png',
     framesMax: 4
   },
   runRight: {
@@ -82,12 +82,12 @@ export const redKenshi = {
     imageSrc: './images/RedKenshi/RunLeft.png',
     framesMax: 8
   },
-  attackRight: {
-    imageSrc: './images/RedKenshi/AttackRight.png',
+  attackMiddleRight: {
+    imageSrc: './images/RedKenshi/AttackMiddleRight.png',
     framesMax: 4
   },
-  attackLeft: {
-    imageSrc: './images/RedKenshi/AttackLeft.png',
+  attackMiddleLeft: {
+    imageSrc: './images/RedKenshi/AttackMiddleLeft.png',
     framesMax: 4
   },
   attackLowRight: {
@@ -106,14 +106,6 @@ export const redKenshi = {
     imageSrc: './images/RedKenshi/AttackHighLeft.png',
     framesMax: 4
   },
-  takeHit: {
-    imageSrc: './images/RedKenshi/TakeHit.png',
-    framesMax: 3
-  },
-  death: {
-    imageSrc: './images/RedKenshi/Death.png',
-    framesMax: 7
-  },
   stanceLowRight: {
     imageSrc: './images/RedKenshi/StanceLowRight.png',
     framesMax: 1
@@ -129,5 +121,13 @@ export const redKenshi = {
   stanceHighLeft: {
     imageSrc: './images/RedKenshi/StanceHighLeft.png',
     framesMax: 1
+  },
+  takeHit: {
+    imageSrc: './images/RedKenshi/TakeHit.png',
+    framesMax: 3
+  },
+  death: {
+    imageSrc: './images/RedKenshi/Death.png',
+    framesMax: 7
   }
 };
