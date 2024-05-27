@@ -1,3 +1,4 @@
+'use strict';
 export const kenshi = {
   stanceMiddleRight: {
     imageSrc: './images/Kenshi/StanceMiddleRight.png',

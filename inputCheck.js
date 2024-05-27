@@ -1,3 +1,4 @@
+'use strict';
 import { player1, player2 } from './script.js';
 export const keys = {
   a: {

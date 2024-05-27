@@ -3,14 +3,11 @@ import Swordsman from './swordsman.js';
 import Sprite from './sprite.js';
 import { kenshi, redKenshi } from './characters.js';
 import { keys } from './inputCheck.js';
-
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const endGameText = document.getElementById('endGameText');
-
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
-
 let isGameOver = false;
 const speed = 3;
 const playerScale = 3.5;
@@ -104,7 +101,7 @@ const checkHit = (player1, player2) => {
     checkRectangularCollision(player1.attackCollision, player2) &&
     player1.isAttacking &&
     !player2.isAttacking &&
-    player1.framesCurrent === 3
+    player1.framesCurrent === 2
   ) {
     player2.takeHitBy(player1);
   }
@@ -114,8 +111,8 @@ const checkSwordsCollisions = () => {
     checkRectangularCollision(player1.attackCollision, player2.attackCollision) &&
     player1.isAttacking &&
     player2.isAttacking &&
-    player1.framesCurrent === 2 &&
-    player2.framesCurrent === 2
+    player1.framesCurrent >= 2 &&
+    player2.framesCurrent >= 2
   ) {
     console.log('Sword Clash!');
   }
@@ -135,6 +132,7 @@ const gameOver = () => {
   endGameText.innerText = `${player1.isDead ? 'Player 2' : 'Player 1'}  has won! 
   Press 'r' to restart`;
 };
+
 const animate = () => {
   window.requestAnimationFrame(animate);
   background.update();
