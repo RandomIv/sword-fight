@@ -20,6 +20,7 @@ const playerOffset = { x: 87 * playerScale, y: 70 * playerScale };
 const velocity = { direction: 0, speed };
 const attackCollisionOffsetRight = { x: -40, y: 0 };
 const attackCollisionOffsetLeft = { x: 210, y: 0 };
+const framesMax = 4;
 
 export let isGameOver = { value: false };
 export let player1;
@@ -44,7 +45,7 @@ const newGame = () => {
     { ...velocity },
     './images/Kenshi/stanceMiddleRight.png',
     playerScale,
-    4,
+    framesMax,
     { ...playerOffset },
     attackCollisionOffsetRight,
     attackCollisionOffsetLeft,
@@ -58,7 +59,7 @@ const newGame = () => {
     { ...velocity },
     './images/RedKenshi/stanceMiddleLeft.png',
     playerScale,
-    8,
+    framesMax,
     { ...playerOffset },
     attackCollisionOffsetRight,
     attackCollisionOffsetLeft,
