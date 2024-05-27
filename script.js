@@ -21,7 +21,7 @@ const velocity = { direction: 0, speed };
 const attackCollisionOffsetRight = { x: -40, y: 0 };
 const attackCollisionOffsetLeft = { x: 210, y: 0 };
 
-export let isGameOver = false;
+export let isGameOver = { value: false };
 export let player1;
 export let player2;
 
@@ -35,7 +35,7 @@ const background = new Sprite(
 
 const newGame = () => {
   endGameText.style.display = 'none';
-  isGameOver = false;
+  isGameOver.value = false;
 
   player1 = new Swordsman(
     context,
@@ -76,7 +76,7 @@ const animate = () => {
   window.requestAnimationFrame(animate);
   background.update();
 
-  if (!isGameOver) {
+  if (!isGameOver.value) {
     player1.update();
     player2.update();
     playerMovement(player1);
@@ -86,7 +86,7 @@ const animate = () => {
   checkSwordsCollisions();
   checkDirectionOfPlayers();
 
-  if (isGameOver) {
+  if (isGameOver.value) {
     gameOver();
   }
 

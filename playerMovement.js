@@ -12,7 +12,7 @@ export const playerMovement = (player) => {
   if (player.isDead) {
     player.changeSprite(`death${direction}`);
     if (player.framesCurrent === player.framesMax - 1) {
-      isGameOver = true;
+      isGameOver.value = true;
     }
   } else if (player.isAttacking) {
     player.changeSprite(`attack${stance}${direction}`);
