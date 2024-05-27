@@ -9,3 +9,5 @@ ___
 1. 'arrowRight', 'arrowLeft' - move right/left
 2. 'arrowUp', 'arrowDown' - 'high'/low stance
 3. 'z' - attack
+## How to play
+##### go there to play: https://randomiv.github.io/sword-fight/
