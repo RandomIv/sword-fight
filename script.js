@@ -114,10 +114,13 @@ const checkSwordsCollisions = () => {
     player1.framesCurrent >= 2 &&
     player2.framesCurrent >= 2
   ) {
-    console.log('Sword Clash!');
+    player1.isAttacking = false;
+    player2.isAttacking = false;
+  } else {
+    checkHit(player1, player2);
+    checkHit(player2, player1);
   }
-  checkHit(player1, player2);
-  checkHit(player2, player1);
+
   if (player1.framesCurrent === 3) {
     player1.isAttacking = false;
   }
@@ -136,6 +139,7 @@ const gameOver = () => {
 const animate = () => {
   window.requestAnimationFrame(animate);
   background.update();
+
   if (!isGameOver) {
     player1.update();
     player2.update();
@@ -144,12 +148,12 @@ const animate = () => {
   }
 
   checkSwordsCollisions();
-
   checkDirectionOfPlayers();
 
   if (isGameOver) {
     gameOver();
   }
+
   if (keys.r.isPressed) {
     newGame();
   }
