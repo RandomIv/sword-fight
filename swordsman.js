@@ -42,7 +42,12 @@ export default class Swordsman extends Sprite {
   update() {
     this.draw();
     this.animateFrames();
-    this.position.x += this.velocity.speed * this.velocity.direction;
+    if (
+      this.position.x + this.velocity.speed * this.velocity.direction > 0 &&
+      this.position.x + this.velocity.speed * this.velocity.direction < window.innerWidth
+    ) {
+      this.position.x += this.velocity.speed * this.velocity.direction;
+    }
     this.attackCollision.position.x =
       this.position.x - this.attackCollision[`offset${this.direction}`].x;
     this.attackCollision.position.y =
