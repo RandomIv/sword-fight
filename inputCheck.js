@@ -1,5 +1,7 @@
 'use strict';
+
 import { player1, player2 } from './script.js';
+
 export const keys = {
   a: {
     isPressed: false
@@ -32,10 +34,12 @@ export const keys = {
     isPressed: false
   }
 };
+
 document.addEventListener('keydown', (event) => {
   if (event.key === 'r') {
     keys.r.isPressed = true;
   }
+
   //for player1
   if (!player1.isAttacking) {
     switch (event.key) {
@@ -60,6 +64,7 @@ document.addEventListener('keydown', (event) => {
         break;
     }
   }
+
   //for player2
   if (!player2.isAttacking) {
     switch (event.key) {
@@ -85,10 +90,12 @@ document.addEventListener('keydown', (event) => {
     }
   }
 });
+
 document.addEventListener('keyup', (event) => {
   if (event.key === 'r') {
     keys.r.isPressed = false;
   }
+
   //for player1
   if (!player1.isAttacking) {
     switch (event.key) {
@@ -108,6 +115,7 @@ document.addEventListener('keyup', (event) => {
         break;
     }
   }
+
   //for player2
   if (!player2.isAttacking) {
     switch (event.key) {

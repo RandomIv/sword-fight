@@ -1,3 +1,5 @@
+'use strict';
+
 import { player1, player2 } from './script.js';
 
 const checkRectangularCollision = (rect1, rect2) => {

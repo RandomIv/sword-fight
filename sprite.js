@@ -1,4 +1,5 @@
 'use strict';
+
 export default class Sprite {
   constructor(
     context,
@@ -21,6 +22,7 @@ export default class Sprite {
     this.framesHold = 35;
     this.offset = offset;
   }
+
   draw() {
     this.context.drawImage(
       this.image,
@@ -34,6 +36,7 @@ export default class Sprite {
       this.image.height * this.scale
     );
   }
+
   animateFrames() {
     this.framesElapsed++;
     if (this.framesElapsed % this.framesHold === 0) {
@@ -44,6 +47,7 @@ export default class Sprite {
       }
     }
   }
+
   update() {
     this.draw();
     this.animateFrames();

@@ -1,5 +1,7 @@
 'use strict';
+
 import Sprite from './sprite.js';
+
 export default class Swordsman extends Sprite {
   constructor(
     context,
@@ -36,6 +38,7 @@ export default class Swordsman extends Sprite {
       sprite.image.src = sprite.imageSrc;
     }
   }
+
   update() {
     this.draw();
     this.animateFrames();
@@ -45,9 +48,11 @@ export default class Swordsman extends Sprite {
     this.attackCollision.position.y =
       this.position.y - this.attackCollision[`offset${this.direction}`].y;
   }
+
   attack() {
     this.isAttacking = true;
   }
+
   takeHitBy(player) {
     if (this.stance === player.stance) {
       console.log('Attack blocked');
@@ -55,6 +60,7 @@ export default class Swordsman extends Sprite {
       this.isDead = true;
     }
   }
+
   changeSprite(sprite) {
     if (this.image !== this.sprites[sprite].image) {
       this.image = this.sprites[sprite].image;

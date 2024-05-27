@@ -1,3 +1,5 @@
+'use strict';
+
 import { keys } from './inputCheck.js';
 import { player1, player2, isGameOver } from './script.js';
 
@@ -6,6 +8,7 @@ export const playerMovement = (player) => {
   const lastKey = player.lastKey;
   const stance = player.stance;
   const direction = player.direction;
+
   if (player.isDead) {
     player.changeSprite(`death${direction}`);
     if (player.framesCurrent === player.framesMax - 1) {
