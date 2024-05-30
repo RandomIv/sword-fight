@@ -59,9 +59,7 @@ export default class Swordsman extends Sprite {
   }
 
   takeHitBy(player) {
-    if (this.stance === player.stance) {
-      console.log('Attack blocked');
-    } else {
+    if (this.stance !== player.stance) {
       this.isDead = true;
     }
   }
