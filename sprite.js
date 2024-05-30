@@ -19,7 +19,7 @@ export default class Sprite {
     this.framesMax = framesMax;
     this.framesElapsed = 0;
     this.framesCurrent = 0;
-    this.framesHold = 35;
+    this.framesHold = 20;
     this.offset = offset;
   }
 
